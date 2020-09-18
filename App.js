@@ -1,25 +1,63 @@
-import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  StatusBar,
+  SafeAreaView,
+} from "react-native";
 
-import {InfoInput} from './components/InfoInput';
+import { InfoInput } from "./components/InfoInput";
+import { Calculator } from "./components/Calculator";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Candy Calc</Text>
-      <Text>A calculator for Exp. Candy optimization in Pokemon Sword & Shield. Read the FAQ for more information.</Text>
-      <InfoInput />
-      <StatusBar style="auto" />
-    </View>
-  );
+export default class App extends React.Component {
+  state = {
+    startingLevel: 0,
+    targetLevel: 0,
+    xp: "",
+    onClick: () => {},
+  };
+
+  render() {
+    return (
+      <View style={styles.mainAppContainer}>
+        <Text>Candy Calc</Text>
+        <View>
+          <InfoInput
+            setClickCalc={(fn) => {
+              this.setState({ onClick: fn });
+            }}
+            onStartingChange={(start) =>
+              this.setState({ startingLevel: start })
+            }
+            onTargetChange={(end) => this.setState({ targetLevel: end })}
+            onExpChange={(xp) => {
+              this.setState({ xp: xp });
+            }}
+          />
+        </View>
+        <Calculator
+          onCandyChange={(val, prp) => {
+            this.setState({ ...this.state, [prp]: val });
+          }}
+          start={this.state.startingLevel}
+          end={this.state.targetLevel}
+          exp={this.state.xp}
+          onClickCalc={() => this.state.onClick()}
+        />
+        <StatusBar style="auto" />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  mainAppContainer: {
+    backgroundColor: "#fadfac",
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+    alignSelf: "center",
   },
 });
