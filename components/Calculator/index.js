@@ -146,7 +146,7 @@ export class Calculator extends Component {
       expDiff = expTarget - expCurrent;
       problem = problemText.replace(/{exp}/g, expDiff);
 
-      for (x = 0; x < 5; x++) {
+      for (let x = 0; x < 5; x++) {
         let size = CANDY_SIZES[x].toLowerCase();
         problem = problem.replace(RegExp("{" + size + "}"), this.state[size]);
       }

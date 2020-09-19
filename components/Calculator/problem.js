@@ -1,4 +1,4 @@
-export default problemText =
+const problemText =
   "\\* Problem: candy *\\\n\n" +
   "Minimize\n" +
   "obj: + 101 xs + 801 s + 3001 m + 10001 l + 30001 xl\n\n" +
@@ -13,3 +13,4 @@ export default problemText =
   "Generals\n" +
   "xs s m l xl\n\n" +
   "End";
+export default problemText;

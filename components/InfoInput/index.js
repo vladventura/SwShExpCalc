@@ -35,12 +35,12 @@ export class InfoInput extends Component {
         );
       })
       .then((data) => {
-        let slug, slugs;
+        let slug, slugs, len;
         let finished = [];
         slugs = Object.keys(data);
         len = slugs.length;
 
-        for (x = 0; x < len; x++) {
+        for (let x = 0; x < len; x++) {
           slug = slugs[x];
           finished.push({
             id: data[slug].id,

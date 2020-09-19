@@ -1,6 +1,4 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { Picker } from "@react-native-community/picker";
 
 import SearchableDropdown from "react-native-searchable-dropdown";
 
@@ -25,7 +23,7 @@ export const Selector = (props) => {
         color: "#222",
       }}
       itemsContainerStyle={{
-        maxHeight: "60%",
+        maxHeight: "50%",
       }}
       items={props.values}
       placeholder="Type the Poke's name"
