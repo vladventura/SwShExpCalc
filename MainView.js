@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, Alert } from "react-native";
+import { View, Text, Alert, StyleSheet, ScrollView } from "react-native";
 import InfoInput from "./components/InfoInput";
 import Calculator from "./components/Calculator";
-
+import styles from "./styles";
 /** Redux store actions */
 import { connect } from "react-redux";
 import { errorDismised } from "./redux/actions/infoActions";
+import Selector from "./components/Selector";
 /** End of Redux store action */
 
 class MainView extends Component {
@@ -31,11 +32,23 @@ class MainView extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Candy Calc</Text>
-        <InfoInput />
-        <Calculator />
-        {this.checkForAlert()}
+      <View style={[styles.container, styles.column, styles.mainContainer]}>
+        <Text style={[styles.title, styles.textThemeDark]}>Candy Calc</Text>
+        <View
+          style={[
+            styles.container,
+            {
+              height: "auto",
+            },
+          ]}
+        >
+          <Selector />
+        </View>
+        <ScrollView>
+          <InfoInput />
+          <Calculator />
+          {this.checkForAlert()}
+        </ScrollView>
       </View>
     );
   }

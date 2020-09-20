@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View, TextInput, Text } from "react-native";
-import Selector from "../Selector";
-
+import styles from "../../styles";
 /** Redux store actions */
 import {
   fetchDropdownData,
@@ -17,12 +16,10 @@ class InfoInput extends Component {
   }
 
   setStartLevel(lvl) {
-    console.log("From InfoInput.setStartLevel(input): " + lvl);
     this.props.setStartingLevel(lvl);
   }
 
   setEndLevel(lvl) {
-    console.log("From InfoInput.setEndLevel(input): " + lvl);
     this.props.setEndingLevel(lvl);
   }
 
@@ -35,24 +32,45 @@ class InfoInput extends Component {
     let start = this.props.startingLevel;
     let end = this.props.targetLevel;
     return (
-      <View>
+      <View style={[styles.container, styles.row]}>
         {this.props.pokemonData ? (
-          <View>
-            <Selector />
-            {name && <Text>Chosen Pokemon: {name}</Text>}
-            {exp && <Text>Exp. Curve: {exp}</Text>}
-            <Text>Current Level:</Text>
-            <TextInput
-              onChangeText={(val) => this.setStartLevel(val)}
-              keyboardType="numeric"
-              value={start.toString() || ""}
-            />
-            <Text>Target Level:</Text>
-            <TextInput
-              onChangeText={(val) => this.setEndLevel(val)}
-              keyboardType="numeric"
-              value={end.toString() || ""}
-            />
+          <View style={[styles.column]}>
+            {name && exp && (
+              <View style={[styles.column, styles.chosenExpDisplay]}>
+                <Text style={[styles.text, styles.textThemeDark]}>
+                  Chosen Pokemon: {name}
+                </Text>
+                <Text style={[styles.text, styles.textThemeDark]}>
+                  Exp. Curve: {exp}
+                </Text>
+              </View>
+            )}
+            <View
+              style={[styles.container, styles.row, styles.numInputContainer]}
+            >
+              <Text style={[styles.text, styles.textThemeDark]}>
+                Start Level:
+              </Text>
+              <TextInput
+                style={[styles.numInput, styles.levelInput]}
+                onChangeText={(val) => this.setStartLevel(val)}
+                keyboardType="numeric"
+                value={start.toString() || ""}
+              />
+            </View>
+            <View
+              style={[styles.container, styles.row, styles.numInputContainer]}
+            >
+              <Text style={[styles.text, styles.textThemeDark]}>
+                Target Level:
+              </Text>
+              <TextInput
+                style={[styles.numInput, styles.levelInput]}
+                onChangeText={(val) => this.setEndLevel(val)}
+                keyboardType="numeric"
+                value={end.toString() || ""}
+              />
+            </View>
           </View>
         ) : (
           <View>

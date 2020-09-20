@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, TextInput, Button } from "react-native";
 import { Required } from "../Required";
 import problemText from "./problem";
+import styles from "../../styles";
 import "./glpk.min.js";
 import {
   glp_create_prob,
@@ -169,50 +170,68 @@ class Calculator extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Calculator goes here</Text>
-        <View>
-          <Text>XS Candy</Text>
-          <TextInput
-            keyboardType="numeric"
-            value={this.state.xs.toString()}
-            onChangeText={(val) => this.setCandyValue(val, "xs")}
-          />
+      <View style={[styles.container, styles.row]}>
+        <View style={styles.column}>
+          <View
+            style={[styles.container, styles.row, styles.numInputContainer]}
+          >
+            <Text style={[styles.text, styles.textThemeDark]}>XS Candy</Text>
+            <TextInput
+              style={styles.numInput}
+              keyboardType="numeric"
+              value={this.state.xs.toString()}
+              onChangeText={(val) => this.setCandyValue(val, "xs")}
+            />
+          </View>
+          <View
+            style={[styles.container, styles.row, styles.numInputContainer]}
+          >
+            <Text style={[styles.text, styles.textThemeDark]}>S Candy</Text>
+            <TextInput
+              style={styles.numInput}
+              keyboardType="numeric"
+              value={this.state.s.toString()}
+              onChangeText={(val) => this.setCandyValue(val, "s")}
+            />
+          </View>
+          <View
+            style={[styles.container, styles.row, styles.numInputContainer]}
+          >
+            <Text style={[styles.text, styles.textThemeDark]}>M Candy</Text>
+            <TextInput
+              style={styles.numInput}
+              keyboardType="numeric"
+              value={this.state.m.toString()}
+              onChangeText={(val) => this.setCandyValue(val, "m")}
+            />
+          </View>
+          <View
+            style={[styles.container, styles.row, styles.numInputContainer]}
+          >
+            <Text style={[styles.text, styles.textThemeDark]}>L Candy</Text>
+            <TextInput
+              style={styles.numInput}
+              keyboardType="numeric"
+              value={this.state.l.toString()}
+              onChangeText={(val) => this.setCandyValue(val, "l")}
+            />
+          </View>
+          <View
+            style={[styles.container, styles.row, styles.numInputContainer]}
+          >
+            <Text style={[styles.text, styles.textThemeDark]}>XL Candy</Text>
+            <TextInput
+              style={styles.numInput}
+              keyboardType="numeric"
+              value={this.state.xl.toString()}
+              onChangeText={(val) => this.setCandyValue(val, "xl")}
+            />
+          </View>
+          <View style={styles.calcButton}>
+            <Button title="Calculate" onPress={() => this.calcOptimal()} />
+          </View>
+          {this.showRequired()}
         </View>
-        <View>
-          <Text>S Candy</Text>
-          <TextInput
-            keyboardType="numeric"
-            value={this.state.s.toString()}
-            onChangeText={(val) => this.setCandyValue(val, "s")}
-          />
-        </View>
-        <View>
-          <Text>M Candy</Text>
-          <TextInput
-            keyboardType="numeric"
-            value={this.state.m.toString()}
-            onChangeText={(val) => this.setCandyValue(val, "m")}
-          />
-        </View>
-        <View>
-          <Text>L Candy</Text>
-          <TextInput
-            keyboardType="numeric"
-            value={this.state.l.toString()}
-            onChangeText={(val) => this.setCandyValue(val, "l")}
-          />
-        </View>
-        <View>
-          <Text>XL Candy</Text>
-          <TextInput
-            keyboardType="numeric"
-            value={this.state.xl.toString()}
-            onChangeText={(val) => this.setCandyValue(val, "xl")}
-          />
-        </View>
-        <Button title="Calculate" onPress={() => this.calcOptimal()}></Button>
-        {this.showRequired()}
       </View>
     );
   }

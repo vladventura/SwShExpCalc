@@ -29,10 +29,9 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   mainAppContainer: {
-    backgroundColor: "#fadfac",
+    backgroundColor: "#111",
     height: "100%",
     width: "100%",
     alignItems: "center",
-    alignSelf: "center",
   },
 });

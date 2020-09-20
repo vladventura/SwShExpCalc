@@ -1,34 +1,36 @@
 import React from "react";
-
 import SearchableDropdown from "react-native-searchable-dropdown";
 
 /** Redux store actions */
-import { selectPokemon } from "../redux/actions/infoActions";
+import { selectPokemon } from "../../redux/actions/infoActions";
 import { connect } from "react-redux";
 /** End of Redux store action */
 
 const Selector = (props) => {
   return (
     <SearchableDropdown
-      onTextChange={(text) => console.log(text)}
+      onTextChange={() => {}}
       onItemSelect={(item) => props.selectPokemon(item)}
-      containerStyle={{ padding: 5 }}
       textInputStyle={{
-        borderWidth: 1,
-        borderColor: "#ccc",
-        backgroundColor: "#FAF7F6",
+        borderWidth: 2,
+        borderColor: "white",
+        backgroundColor: "#555",
+        paddingLeft: 10,
+        fontSize: 18,
+        color: "white",
       }}
       itemStyle={{
         marginTop: 2,
-        backgroundColor: "#FAF9F8",
-        borderColor: "#bbb",
-        borderWidth: 1,
+        backgroundColor: "#555",
       }}
       itemTextStyle={{
-        color: "#222",
+        color: "white",
+        paddingLeft: 25,
+        fontSize: 18,
       }}
       itemsContainerStyle={{
-        maxHeight: "50%",
+        maxHeight: "75%",
+        paddingTop: 5,
       }}
       items={props.pokemonData}
       placeholder="Type the Poke's name"
