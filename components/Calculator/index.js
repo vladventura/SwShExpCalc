@@ -17,6 +17,11 @@ import {
   IOCP,
 } from "./glpk.min.js";
 
+/** Redux store actions */
+import { validate } from "../../redux/actions/infoActions";
+import { connect } from "react-redux";
+/** End of Redux store action */
+
 const CANDY_SIZES = ["XS", "S", "M", "L", "XL"];
 
 const toCamel = (str) =>
@@ -57,7 +62,7 @@ const curves = {
   },
 };
 
-export class Calculator extends Component {
+class Calculator extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -74,11 +79,7 @@ export class Calculator extends Component {
       solved: "initial",
     };
   }
-  componentDidMount() {
-    for (const prp in this.state) {
-      this.props.onCandyChange(prp, this.state[prp]);
-    }
-  }
+
   setCandyValue(val, prp) {
     this.setState({
       [prp]: val,
@@ -112,9 +113,6 @@ export class Calculator extends Component {
         this.setState({
           ["ans" + colname]: colval,
         });
-        console.log(colval);
-        console.log(colname);
-        console.log("ans" + colname);
 
         objval -= colval;
       }
@@ -129,20 +127,15 @@ export class Calculator extends Component {
   }
 
   calcOptimal() {
-    this.setState({ solved: "loading" });
-    let error = this.props.onClickCalc();
-    if (error) {
-      alert(error);
-    } else {
+    this.setState({ solved: "initial" });
+    this.props.validate();
+    if (this.props.isValid === "clean") {
+      this.setState({ solved: "loading" });
       let expDiff, expCurrent, expTarget, curve, problem;
-      curve = toCamel(this.props.exp);
-      console.log("From Calculator.calcOptimal(), Start: " + this.props.start);
-      console.log("From Calculator.calcOptimal(), End: " + this.props.end);
-      console.log("From Calculator.calcOptimal(), Curve: " + curve);
-      expCurrent = this.calcExpToLvl(curve, this.props.start);
-      console.log("From Calculator.calcOptimal(), Exp Curve: " + expCurrent);
-      expTarget = this.calcExpToLvl(curve, this.props.end);
-      console.log("From Calculator.calcOptimal(), Exp Target: " + expTarget);
+      curve = toCamel(this.props.pokemon.exp);
+
+      expCurrent = this.calcExpToLvl(curve, this.props.startingLevel);
+      expTarget = this.calcExpToLvl(curve, this.props.targetLevel);
       expDiff = expTarget - expCurrent;
       problem = problemText.replace(/{exp}/g, expDiff);
 
@@ -157,11 +150,11 @@ export class Calculator extends Component {
   }
 
   showRequired() {
-    if (this.state.solved == "initial") {
+    if (this.state.solved === "initial") {
       return;
-    } else if (this.state.solved == "loading") {
+    } else if (this.state.solved === "loading") {
       return <Text>Loading</Text>;
-    } else if (this.state.solved == "solved") {
+    } else if (this.state.solved === "solved") {
       return (
         <Required
           xs={this.state.ansxs}
@@ -224,3 +217,17 @@ export class Calculator extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    ...state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    validate: () => dispatch(validate()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calculator);

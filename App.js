@@ -1,53 +1,28 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  StatusBar,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, Text, View, StatusBar } from "react-native";
 
-import { InfoInput } from "./components/InfoInput";
-import { Calculator } from "./components/Calculator";
+import InfoInput from "./components/InfoInput";
+import Calculator from "./components/Calculator";
+
+/** Redux store components */
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import rootReducer from "./redux/reducers/rootReducer";
+import MainView from "./MainView";
+/** End of Redux store components */
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default class App extends React.Component {
-  state = {
-    startingLevel: 0,
-    targetLevel: 0,
-    xp: "",
-    onClick: () => {},
-  };
-
   render() {
     return (
-      <View style={styles.mainAppContainer}>
-        <Text>Candy Calc</Text>
-        <View>
-          <InfoInput
-            setClickCalc={(fn) => {
-              this.setState({ onClick: fn });
-            }}
-            onStartingChange={(start) =>
-              this.setState({ startingLevel: start })
-            }
-            onTargetChange={(end) => this.setState({ targetLevel: end })}
-            onExpChange={(xp) => {
-              this.setState({ xp: xp });
-            }}
-          />
+      <Provider store={store}>
+        <View style={styles.mainAppContainer}>
+          <MainView />
+          <StatusBar style="auto" />
         </View>
-        <Calculator
-          onCandyChange={(val, prp) => {
-            this.setState({ ...this.state, [prp]: val });
-          }}
-          start={this.state.startingLevel}
-          end={this.state.targetLevel}
-          exp={this.state.xp}
-          onClickCalc={() => this.state.onClick()}
-        />
-        <StatusBar style="auto" />
-      </View>
+      </Provider>
     );
   }
 }

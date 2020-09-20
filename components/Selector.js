@@ -2,11 +2,16 @@ import React from "react";
 
 import SearchableDropdown from "react-native-searchable-dropdown";
 
-export const Selector = (props) => {
+/** Redux store actions */
+import { selectPokemon } from "../redux/actions/infoActions";
+import { connect } from "react-redux";
+/** End of Redux store action */
+
+const Selector = (props) => {
   return (
     <SearchableDropdown
       onTextChange={(text) => console.log(text)}
-      onItemSelect={(item) => props.setSelectedValue(item)}
+      onItemSelect={(item) => props.selectPokemon(item)}
       containerStyle={{ padding: 5 }}
       textInputStyle={{
         borderWidth: 1,
@@ -25,22 +30,23 @@ export const Selector = (props) => {
       itemsContainerStyle={{
         maxHeight: "50%",
       }}
-      items={props.values}
+      items={props.pokemonData}
       placeholder="Type the Poke's name"
       underlineColorAndroid="transparent"
     />
-    // <Picker
-    //   selectedValue={props.selectedValue.name}
-    //   onValueChange={(newValue, index) =>
-    //     props.setSelectedValue(props.values[index])
-    //   }
-    //   style={{ height: 50, width: 150 }}
-    // >
-    //   {props.values.map((item) => {
-    //     return (
-    //       <Picker.Item key={item.name} value={item.name} label={item.name} />
-    //     );
-    //   })}
-    // </Picker>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    pokemonData: state.pokemonData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectPokemon: (pkmn) => dispatch(selectPokemon(pkmn)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Selector);
