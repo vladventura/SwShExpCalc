@@ -77,6 +77,8 @@ export const validate = () => {
   return (dispatch, getState) => {
     let currentState = getState();
     let { startingLevel, targetLevel } = currentState;
+    startingLevel = parseInt(startingLevel);
+    targetLevel = parseInt(targetLevel);
     if (!currentState.pokemon) {
       dispatch({
         type: VALIDATE_ERROR,
